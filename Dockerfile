@@ -1,6 +1,7 @@
 FROM node:10-alpine
 
 RUN mkdir -p /opt/nightscout && \
+  apk update && apk add git && \
   git clone https://github.com/nightscout/cgm-remote-monitor.git /opt/nightscout
 
 WORKDIR /opt/nightscout
