@@ -1,11 +1,13 @@
 FROM node:10-alpine
 
-RUN mkdir -p /opt/nightscout && \
+RUN mkdir -p /nightscout && \
   apk update && apk add git && \
-  git clone https://github.com/nightscout/cgm-remote-monitor.git /opt/nightscout
+  git clone https://github.com/nightscout/cgm-remote-monitor.git /nightscout
+  chown -R node:node /nightscout
 
-WORKDIR /opt/nightscout
+WORKDIR /nightscout
 
+USER node
 RUN npm install && \
   npm run postinstall && \
   npm run env
