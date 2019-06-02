@@ -10,7 +10,7 @@ WORKDIR /nightscout
 USER node
 RUN npm install && \
   npm run postinstall && \
-  npm run env
+  npm audit fix
 
 EXPOSE 1337
 
