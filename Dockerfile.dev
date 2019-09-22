@@ -5,10 +5,14 @@ ARG GIT_BRANCH=dev
 EXPOSE 1337
 
 RUN mkdir -p /nightscout && \
-  apk update && apk add --no-cache --virtual build-dependencies python make g++ git && \
+  apk update && \
+  apk add --no-cache --virtual build-dependencies python make g++ git && \
+  apk add --no-cache tini && \
   echo "**** install w/ branch $GIT_BRANCH ****" && \
   git clone $GIT_URL --branch $GIT_BRANCH /nightscout && \
   chown -R node:node /nightscout
+
+ENTRYPOINT ["/sbin/tini", "--"]
 
 WORKDIR /nightscout
 
