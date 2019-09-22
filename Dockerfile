@@ -10,16 +10,16 @@ RUN mkdir -p /nightscout && \
   apk add --no-cache tini && \
   echo "**** install w/ branch $GIT_BRANCH ****" && \
   git clone $GIT_URL --branch $GIT_BRANCH /nightscout && \
+  cd /nightscout && \
+  npm install --no-cache && \
+  npm run postinstall && \
+  npm audit fix && \
+  apk del build-dependencies && \
   chown -R node:node /nightscout
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
 WORKDIR /nightscout
-
-RUN npm install --no-cache && \
-  npm run postinstall && \
-  npm audit fix && \
-  apk del build-dependencies
 
 USER node
 
